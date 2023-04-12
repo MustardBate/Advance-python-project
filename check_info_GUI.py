@@ -35,7 +35,7 @@ class BateInfo:
         self.text2 = ctk.CTkLabel(self.info_frame, text="If there is any problems, please contact an admin for help!", font=("Helvetica",18,"italic"), fg_color="light blue", text_color="black")
         self.text2.pack()
 
-        # IMPORT USER'S INFORMATION (NAME, BALANCE, PLANS, DOMAIN, RANDOMLY GENERATED IP)
+        # NEED IMPORT USER'S INFORMATION (NAME, BALANCE, PLANS, DOMAIN, RANDOMLY GENERATED IP)
         self.username = ctk.CTkLabel(self.info_frame, text="Current user: ", font=("Helvetica",20,"bold"), fg_color="light blue", text_color="black")
         self.username.pack(pady=10)
         self.balance = ctk.CTkLabel(self.info_frame, text="Current balance: ", font=("Helvetica",20,"bold"), fg_color="light blue", text_color="black")
@@ -48,13 +48,12 @@ class BateInfo:
         self.custom_ip.pack(pady=10)
         self.custom_ip_box = ctk.CTkTextbox(self.info_frame, width=500, height=1, fg_color="light cyan", text_color="black", corner_radius=10)
         self.custom_ip_box.pack()
-        self.custom_ip_box.insert("0.0", "Need to add a function that create random IP!")
+        self.custom_ip_box.insert("0.0", "Need to add a function that create random IP! (The IP will be placed here!)")
         self.custom_ip_box.configure(state="disabled")
 
 
         self.return_button = ctk.CTkButton(self.main_frame, text="Return", width=10, fg_color="light blue", text_color="black", corner_radius=10, command=self.root.destroy)
         self.return_button.pack(side=BOTTOM, pady=6)
-
 
     def run(self):
         self.root.mainloop()
