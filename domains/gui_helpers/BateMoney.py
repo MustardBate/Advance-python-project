@@ -110,7 +110,7 @@ class BateMoney:
 
         self.show_current_user = ctk.CTkLabel(self.balance_frame, text="Current user:", font=("Helvetica",19,"bold"), text_color="black").place(x=20,y=80)
 
-        self.show_current_balance = ctk.CTkLabel(self.balance_frame, text="Current balance: " + " VND", font=("Helvetica",19,"bold"), text_color="black").place(x=20,y=120)
+        self.show_current_balance = ctk.CTkLabel(self.balance_frame, text=f"Current balance: {self.system.logged_in_user.balance} VND", font=("Helvetica",19,"bold"), text_color="black").place(x=20,y=120)
 
 
     def history_menu(self):
@@ -140,7 +140,7 @@ class BateMoney:
         for i in range(len(transactions)):
             print(transactions[i])
             transaction = transactions[i]
-            self.history = ctk.CTkLabel(self.history_frame, text="Transaction " + str(i + 1) + ": " + str(transaction["amount"]) + " VND", font=("Helvetica",16,"bold"), text_color="black").pack(pady=5)
+            self.history = ctk.CTkLabel(self.history_scrollframe, text="Transaction " + str(i + 1) + ": " + str(transaction["amount"]) + " VND", font=("Helvetica",14,"italic"), text_color="black", fg_color="light cyan").grid(row=i, column=0, pady=5)
 
     def run(self):
         self.root.mainloop()

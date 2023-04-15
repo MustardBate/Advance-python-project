@@ -76,7 +76,7 @@ class BateMain:
         self.go_to_user_info = ctk.CTkButton(self.m_frame, text="User Info", font=("Bodoni",16,"bold"),width=150, height=54, fg_color="light blue", text_color="black", corner_radius=10, command=self.user_info)
         self.go_to_user_info.pack(pady=10)
 
-        self.return_button = ctk.CTkButton(self.m_frame, text="Return", width=10, fg_color="light blue", text_color="black", corner_radius=10, command=self.sign_out)
+        self.return_button = ctk.CTkButton(self.m_frame, text="Sign out", width=12, fg_color="light blue", text_color="black", corner_radius=10, command=self.sign_out)
         self.return_button.pack(side=BOTTOM, pady=6)
 
 
