@@ -1,9 +1,9 @@
 from domains.system import System
 from domains.web import Web
-from domains.admin import Admin
+from domains.admin import AdminCLI
 
 class Menu:
-    def __init__(self, system: System, web: Web, admin: Admin):
+    def __init__(self, system: System, web: Web, admin: AdminCLI):
         self.web = web # access web domain service menu
         self.system = system # access all accounts data
         self.admin = admin # access admin menu
@@ -47,6 +47,7 @@ class Menu:
             print("[6] Web domain service menu")
             print("-"*10)
             print("[7] Log-out")
+            print("[8]: Transaction history")
             if self.system.logged_in_user.is_admin:
                 print("[*] Admin menu")
 
@@ -59,6 +60,7 @@ class Menu:
                 case "5": self.system.top_up()
                 case "6": self.web.web_domain_service_menu()
                 case "7": return self.system.log_out() # Here's the exit point of this method's loop. `log_out()` return False, assign to `is_logged_in` in `main()` function to get back to `is_not_logged_in()` menu.
+                case "8": self.system.transaction_history()
                 case "*":
                     if self.system.logged_in_user.is_admin:
                         self.admin.admin_menu()
@@ -68,3 +70,41 @@ class Menu:
 
             input("\nPress Enter to continue...")
 
+
+def main():
+    # System object:
+    # - Containing all users data
+    # - Managing login, logout, create account,...
+    # - Managing a mobile data plan
+    system = System()
+
+    # Web object:
+    # - VPN service
+    # - VPS service
+    # - Domain service
+    web = Web(system)
+
+    admin = AdminCLI(system, web)
+    menu = Menu(system, web, admin)
+
+    is_logged_in = False
+    while True:
+        # Flush user data to json file when ever return to login/signup menu
+        system.flush_data_to_json()
+
+        if is_logged_in:
+            is_logged_in = menu.is_signed_in()
+        else:
+            is_logged_in = menu.is_not_logged_in()
+
+        input("\nPress Enter to continue...")
+
+    # create admin account
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\n\nGoodbye!")
+        exit()

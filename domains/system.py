@@ -3,6 +3,10 @@ import os
 import json
 import random
 from domains.user import User
+import customtkinter as ctk
+from customtkinter import *
+from tkinter import messagebox
+from datetime import datetime
 
 class System:
     def __init__(self):
@@ -20,9 +24,11 @@ class System:
 
         self.logged_in_user = User() # This is a blank user object, to be assigned to the logged in user object
 
-    # ==============================
-    # SAVE/LOAD PERSISTENT USER DATA
-    # ==============================
+    # ===================================================================
+    #
+    #      FOR PERSISTENCE DATA STORAGE, DO NOT MODIFY BELOW THIS LINE
+    #
+    # ===================================================================
 
     def load_data_from_json(self, file_name: str) -> None:
         with open(file_name, "r") as f:
@@ -53,7 +59,7 @@ class System:
 
     def flush_data_to_json(self) -> None:
         # Create a temporary list to store the serialized data
-        data: list[dict[str, str | int]] = []
+        data: list[dict[str, str | int | list[dict[str, str | int]]]] = []
 
         # Loop through all users and append the serialized data to the temporary list
         for user in self.users:
@@ -63,9 +69,76 @@ class System:
         with open("users.json", "w") as f:
             json.dump(data, f)
 
-    # ======================
+    # ===================================================================
+    #
+    #      FOR PERSISTENCE DATA STORAGE, DO NOT MODIFY ABOVE THIS LINE
+    #
+    # ===================================================================
+
+    # =================================================
+    #
+    #      METHODS FOR THIS CLASS [BELOW] THIS LINE
+    #
+    # =================================================
+
+    def is_valid_domain(self, domain_name: str) -> bool:
+        """Check if domain is vaid + loop through all users and check if domain_name is available"""
+
+        # 2 conditions to check if domain_name is valid
+        is_valid = re.match(r"^(?=.{1,255}$)[a-zA-Z0-9](?:(?:[a-zA-Z0-9\-]){0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})+$", domain_name)
+        is_taken = False
+
+        # iterate users to check if domain_name is taken
+        for user in self.users:
+            if user.domain_name == domain_name:
+                is_taken = True
+                break
+
+        # return True if both conditions are met
+        if is_valid and not is_taken:
+            return True
+        else:
+            return False
+
+    def get_random_ip(self):
+        while True:
+            # check if the random_ip is a private IP address
+            # - generate a list of 4 random numbers between 0 and 255
+            random_ip_list = [str(random.randint(0, 255)) for _ in range(4)]
+            # - merge elements in the list into a string separated by dots
+            random_ip = ".".join(random_ip_list)
+            # - a list of private IP ranges
+            private_ip_ranges = ["10.", "172.16.", "192.168."]
+            # - a list containing True or False depending on whether the random_ip starts with any of the private IP ranges
+            private_range_match = [random_ip.startswith(private_ip_range) for private_ip_range in private_ip_ranges]
+            if any(private_range_match): # if any of the private IP ranges match,
+                continue # skip the rest of the loop and start again
+
+            # check if the random_ip is already assigned to a user
+            ip_taken = False
+            for user in self.users: # loop through all users
+                if user.domain_ip == random_ip: # if the random_ip is already assigned to a user,
+                    ip_taken = True
+                    break # break out of the for loop
+            if ip_taken:
+                continue
+
+            # if the loop ends and no other user has the random_ip, return it
+            return random_ip
+        
+    # =================================================
+    #
+    #      METHODS FOR THIS CLASS [ABOVE] THIS LINE
+    #
+    # =================================================
+
+    # ============================================================
+    #
+    #      METHODS FOR CLI [BELOW] THIS LINE - DO NOT MODIFY
+    #
+    # ============================================================
+
     # LOG-IN/LOG-OUT/SIGN-UP
-    # ======================
 
     def create_account(self):
         # Handling username
@@ -149,9 +222,7 @@ class System:
         print("Logout successful!")
         return False
 
-    # ==================
     # BALANCE MANAGEMENT
-    # ==================
 
     def check_balance(self):
         print(f"\nYour balance: {self.logged_in_user.balance} VND")
@@ -168,9 +239,7 @@ class System:
         print("Recharge successful!")
         print(f"Your balance: {self.logged_in_user.balance} VND")
 
-    # ======================
     # MOBILE PLAN MANAGEMENT
-    # ======================
 
     def check_current_plan(self):
         current_mobile_plan_id = self.logged_in_user.mobile_plan_id
@@ -195,7 +264,7 @@ class System:
             if not choice.isdigit():
                 print("Invalid input!")
                 break
-            
+
             choice = int(choice)
             if choice not in self.mobile_plans:
                 print("Invalid input!")
@@ -212,6 +281,8 @@ class System:
             match choice:
                 case "1": continue
                 case _: break
+
+    # DOMAIN MANAGEMENT
 
     def register_mobile_plan(self):
         # list all mobile plans
@@ -261,63 +332,68 @@ class System:
             self.logged_in_user.mobile_plan_id = input_mobile_plan_id
             self.logged_in_user.balance -= int(self.mobile_plans[input_mobile_plan_id]['price'])
             print("Purchase successful!")
+            print(f"Your balance: {self.logged_in_user.balance} VND")
+            # adds transaction to user's transaction history
+            self.logged_in_user.transaction_history.append({
+                "date": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+                "amount": int(self.mobile_plans[input_mobile_plan_id]['price']),
+                "description": f"Purchase {self.mobile_plans[input_mobile_plan_id]['name']}"
+            })
             return
 
-    # =================
-    # DOMAIN MANAGEMENT
-    # =================
 
-    def is_valid_domain(self, domain_name: str) -> bool:
-        """Check if domain is vaid + loop through all users and check if domain_name is available"""
-
-        # 2 conditions to check if domain_name is valid
-        is_valid = re.match(r"^(?=.{1,255}$)[a-zA-Z0-9](?:(?:[a-zA-Z0-9\-]){0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})+$", domain_name)
-        is_taken = False
-
-        # iterate users to check if domain_name is taken
-        for user in self.users:
-            if user.domain_name == domain_name:
-                is_taken = True
-                break
-
-        # return True if both conditions are met
-        if is_valid and not is_taken:
-            return True
-        else:
-            return False
-
-    def get_random_ip(self):
-        while True:
-            # check if the random_ip is a private IP address
-            # - generate a list of 4 random numbers between 0 and 255
-            random_ip_list = [str(random.randint(0, 255)) for _ in range(4)]
-            # - merge elements in the list into a string separated by dots
-            random_ip = ".".join(random_ip_list)
-            # - a list of private IP ranges
-            private_ip_ranges = ["10.", "172.16.", "192.168."]
-            # - a list containing True or False depending on whether the random_ip starts with any of the private IP ranges
-            private_range_match = [random_ip.startswith(private_ip_range) for private_ip_range in private_ip_ranges]
-            if any(private_range_match): # if any of the private IP ranges match,
-                continue # skip the rest of the loop and start again
-
-            # check if the random_ip is already assigned to a user
-            ip_taken = False
-            for user in self.users: # loop through all users
-                if user.domain_ip == random_ip: # if the random_ip is already assigned to a user,
-                    ip_taken = True
-                    break # break out of the for loop
-            if ip_taken:
-                continue
-
-            # if the loop ends and no other user has the random_ip, return it
-            return random_ip
-
-    # ========
+    def transaction_history(self):
+        print("\n== Transaction history ==")
+        for transaction in self.logged_in_user.transaction_history:
+            print(f"{transaction['date']} - {transaction['amount']} VND - {transaction['description']}")
     # COSMETIC
-    # ========
 
     def clear_screen(self):
         if os.name == "nt": # If the host OS is Windows
             os.system("cls")
         else:
             os.system("clear")
+
+    # ============================================================
+    #
+    #      METHODS FOR CLI [ABOVE] THIS LINE - DO NOT MODIFY
+    #
+    # ============================================================
+
+    # ==========================================
+    #
+    #      METHODS FOR GUI [BELOW] THIS LINE
+    #
+    # ==========================================
+
+    def purchase_mobile_plan(self, mobile_plan_id):
+        # checks if user has a current plan
+        if self.logged_in_user.mobile_plan_id != 0:
+            current_plan_name = self.mobile_plans[self.logged_in_user.mobile_plan_id]['name']
+            choice = messagebox.askyesno("Bate", f"Your current plan is: {current_plan_name}. Do you want to change?")
+            if not choice:
+                messagebox.showinfo("Bate", "Purchase cancelled.")
+                return
+
+        # checks if user has sufficient balance
+        if self.logged_in_user.balance < int(self.mobile_plans[mobile_plan_id]['price']):
+            messagebox.showerror("Bate", f"Insufficient balance. Your balance: {self.logged_in_user.balance} VND")
+            return
+
+        # updates user's product and balance
+        self.logged_in_user.mobile_plan_id = mobile_plan_id
+        self.logged_in_user.balance -= int(self.mobile_plans[mobile_plan_id]['price'])
+        messagebox.showinfo("Bate", "Purchase successful!")
+        return
+
+    def add_user(self, username, hashed_password):
+        user = User()
+        user.username = username
+        user.password = hashed_password
+        self.users.append(user)
+
+    # ===========================================
+    #
+    #      METHODS FOR GUI [ABOVE] THIS LINE
+    #
+    # ===========================================
