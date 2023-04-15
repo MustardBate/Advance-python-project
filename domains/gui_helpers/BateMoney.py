@@ -14,15 +14,15 @@ from datetime import datetime
 
 system = System()
 class BateMoney:
-    def __init__(self, system: System, web: Web):
+    def __init__(self):#, system: System, web: Web):
         self.root = ctk.CTk()
         self.root.title("B.A.T.E Internet")
         self.root.geometry("820x500")
         self.root.resizable(FALSE, FALSE)
         self.root._apply_appearance_mode("system")
 
-        self.system = system
-        self.web = web
+        #self.system = system
+        #self.web = web
 
         global balance
         self.main_frame()
@@ -120,16 +120,20 @@ class BateMoney:
 
         self.history_title = ctk.CTkLabel(self.history_frame, text="---Transaction History---", font=("Bodoni",25,"bold"), text_color="black", fg_color="light blue")
         self.history_title.pack(pady=3)
-        self.note = ctk.CTkLabel(self.history_frame, text="Recent:", font=("Helvetica",15,"italic","bold"),fg_color="light blue", text_color="black").place(x=15, y=40)
-        self.action1 = ctk.CTkFrame(self.history_frame, width=320, height=60, fg_color="light cyan")
-        self.action1.place(x=80, y=40)
-        self.action2 = ctk.CTkFrame(self.history_frame, width=320, height=60, fg_color="light cyan")
-        self.action2.place(x=80, y=115)
-        self.action3 = ctk.CTkFrame(self.history_frame, width=320, height=60, fg_color="light cyan")
-        self.action3.place(x=80, y=190)
-        self.action4 = ctk.CTkFrame(self.history_frame, width=320, height=60, fg_color="light cyan")
-        self.action4.place(x=80, y=265)
-        self.note = ctk.CTkLabel(self.history_frame, text="Oldest:", font=("Helvetica",15,"italic","bold"),fg_color="light blue", text_color="black").place(x=15, y=265)
+        self.history_scrollframe = ctk.CTkScrollableFrame(self.history_frame, width=350, height=250, fg_color="light cyan", scrollbar_button_color="dark cyan")
+        self.history_scrollframe.pack(pady=17)
+        self.history_scrollframe.pack_propagate(FALSE)
+
+        #self.note = ctk.CTkLabel(self.history_frame, text="Recent:", font=("Helvetica",15,"italic","bold"),fg_color="light blue", text_color="black").place(x=15, y=40)
+        #self.action1 = ctk.CTkFrame(self.history_frame, width=320, height=60, fg_color="light cyan")
+        #self.action1.place(x=80, y=40)
+        #self.action2 = ctk.CTkFrame(self.history_frame, width=320, height=60, fg_color="light cyan")
+        #self.action2.place(x=80, y=115)
+        #self.action3 = ctk.CTkFrame(self.history_frame, width=320, height=60, fg_color="light cyan")
+        #self.action3.place(x=80, y=190)
+        #self.action4 = ctk.CTkFrame(self.history_frame, width=320, height=60, fg_color="light cyan")
+        #self.action4.place(x=80, y=265)
+        #self.note = ctk.CTkLabel(self.history_frame, text="Oldest:", font=("Helvetica",15,"italic","bold"),fg_color="light blue", text_color="black").place(x=15, y=265)
         # NEED TO ADD FUNCTION TO SHOW HISTORY (PRINT OUT MONEY DEPOSITED AND WITHDRAWN WITH CORRECT TIME AND DATE)
 
         transactions = self.system.logged_in_user.transaction_history
