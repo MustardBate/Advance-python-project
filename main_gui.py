@@ -118,36 +118,37 @@ class BateSignIn:
         self.top.geometry("400x300")
         self.top.title("B.A.T.E Internet")
         self.top.resizable(FALSE,FALSE)
+        self.top.configure(fg_color="dark cyan")
         self.frame = ctk.CTkFrame(self.top)
-        self.frame.configure(fg_color="dark cyan")
+        self.frame.configure(fg_color="light blue")
         self.frame.pack(padx=10, pady=30)
 
-        self.Title = ctk.CTkLabel(self.frame, text="---ACCOUNT CREATION MENU---", font=("Bodoni",13,"bold"))
+        self.Title = ctk.CTkLabel(self.frame, text="---ACCOUNT CREATION MENU---", font=("Bodoni",17,"bold"))
         self.Title.grid(row=0, column=0, columnspan=3)
 
-        self.objective = ctk.CTkLabel(self.frame, text="Please enter information to create an account!")
+        self.objective = ctk.CTkLabel(self.frame, text="Please enter information to create an account!", font=("Helvetica",13,"italic"))
         self.objective.grid(row=1, column=0, columnspan=3, padx=10, pady= 5)
 
-        self.Username = ctk.CTkLabel(self.frame, text="Username")
+        self.Username = ctk.CTkLabel(self.frame, text="Username", font=("Helvetica",15,"bold","italic"))
         self.Username.grid(row=2, column=0)
-        self.Username_bar = ctk.CTkEntry(self.frame, width=100)
+        self.Username_bar = ctk.CTkEntry(self.frame, width=100, fg_color="light cyan", text_color="black")
         self.Username_bar.grid(row=2, column=1, columnspan=2, padx=3, pady=3)
 
-        self.Password = ctk.CTkLabel(self.frame, text="Password")
+        self.Password = ctk.CTkLabel(self.frame, text="Password", font=("Helvetica",15,"bold","italic"))
         self.Password.grid(row=3, column=0)
-        self.Password_bar = ctk.CTkEntry(self.frame, width=100,  show="*")
+        self.Password_bar = ctk.CTkEntry(self.frame, width=100,  show="*", fg_color="light cyan", text_color="black")
         self.Password_bar.grid(row=3, column=1, columnspan=2, padx=3, pady=3)
 
-        self.Re_Password = ctk.CTkLabel(self.frame, text="Confirm Password")
+        self.Re_Password = ctk.CTkLabel(self.frame, text="Confirm Password", font=("Helvetica",15,"bold","italic"))
         self.Re_Password.grid(row=4, column=0, padx=3, pady=3)
-        self.Re_Password_bar = ctk.CTkEntry(self.frame, width=100, show="*")
+        self.Re_Password_bar = ctk.CTkEntry(self.frame, width=100, show="*", fg_color="light cyan", text_color="black")
         self.Re_Password_bar.grid(row=4, column=1, columnspan=2, padx=3, pady=3)
 
-        self.create_button = ctk.CTkButton(self.top, text="Create account", font=("Bodoni",12,"bold"), command=self.create_account)
-        self.create_button.pack(padx=5, pady=5)
+        self.create_button = ctk.CTkButton(self.top, text="Create account", font=("Bodoni",16,"bold"), fg_color="light blue", text_color="black",command=self.create_account)
+        self.create_button.pack(pady=3)
 
-        self.exit_button = ctk.CTkButton(self.top, text="Return", command=self.back_to_home)
-        self.exit_button.pack(padx=5, pady=5)
+        self.exit_button = ctk.CTkButton(self.top, text="Return", width=20, fg_color="light blue", text_color="black", command=self.back_to_home)
+        self.exit_button.pack(pady=5)
         
         self.root.iconify()
         
@@ -188,30 +189,33 @@ class BateSignIn:
         self.top.geometry("400x300")
         self.top.title("B.A.T.E Internet")
         self.top.resizable(FALSE,FALSE)
-        self.frame = ctk.CTkFrame(self.top)
+        self.top.configure(fg_color="dark cyan")
+        self.frame = ctk.CTkFrame(self.top, width=200, height=200)
         self.frame.pack(padx=10, pady=40)
+        self.frame.configure(fg_color="light blue")
+        self.frame.pack_propagate(FALSE)
 
-        self.Title = ctk.CTkLabel(self.frame, text="---ACCOUNT LOGIN MENU---", font=("Bodoni",13,"bold"))
+        self.Title = ctk.CTkLabel(self.frame, text="---ACCOUNT LOGIN MENU---", font=("Bodoni",15,"bold"))
         self.Title.grid(row=0, column=0, columnspan=3)
 
-        self.objective = ctk.CTkLabel(self.frame, text="Please enter information to login!")
+        self.objective = ctk.CTkLabel(self.frame, text="Please enter information to login!", font=("Helvetica",14,"italic"))
         self.objective.grid(row=1, column=0, columnspan=3, padx=10, pady= 5)
 
-        self.Username = ctk.CTkLabel(self.frame, text="Username", font=("Bodoni",12))
+        self.Username = ctk.CTkLabel(self.frame, text="Username", font=("Helvetica",15,"bold","italic"))
         self.Username.grid(row=2, column=0)
-        self.Username_bar = ctk.CTkEntry(self.frame, width=100)
+        self.Username_bar = ctk.CTkEntry(self.frame, width=100, fg_color="light cyan", text_color="black")
         self.Username_bar.grid(row=2, column=1, columnspan=2, padx=3, pady=3)
 
-        self.Password = ctk.CTkLabel(self.frame, text="Password", font=("Bodoni",12))
+        self.Password = ctk.CTkLabel(self.frame, text="Password", font=("Helvetica",15,"bold","italic"))
         self.Password.grid(row=3, column=0)
-        self.Password_bar = ctk.CTkEntry(self.frame, width=100, show="*")
+        self.Password_bar = ctk.CTkEntry(self.frame, width=100, show="*", fg_color="light cyan", text_color="black")
         self.Password_bar.grid(row=3, column=1, columnspan=2, padx=3, pady=3)
 
-        self.login_button = ctk.CTkButton(self.top, text="Login", font=("Bodoni",12,"bold"), command=self.log_in)
+        self.login_button = ctk.CTkButton(self.top, text="Login", font=("Bodoni",15,"bold"), fg_color="light blue", text_color="black",command=self.log_in)
         self.login_button.pack(padx=5, pady=5)
 
-        self.exit_button = ctk.CTkButton(self.top, text="Return", command=self.back_to_home)
-        self.exit_button.pack(padx=5, pady=5)
+        self.exit_button = ctk.CTkButton(self.top, text="Return", width=20, fg_color="light blue", text_color="black", command=self.back_to_home)
+        self.exit_button.pack(pady=5)
 
         
         self.root.iconify()
@@ -275,24 +279,24 @@ class BateSignIn:
         self.root.title("B.A.T.E Internet")
         self.root.geometry("400x300")
         self.root.resizable(FALSE,FALSE)
-
+        self.root.configure(fg_color="dark cyan")
      
-        self.frame = ctk.CTkFrame(self.root)
+        self.frame = ctk.CTkFrame(self.root, fg_color="light blue")
         self.frame.pack(padx=5, pady=80)
 
-        self.Title1 = ctk.CTkLabel(self.frame, text="---WELCOME TO B.A.T.E---", font=("Bodoni",14,"bold"))
+        self.Title1 = ctk.CTkLabel(self.frame, text="---WELCOME TO B.A.T.E---", font=("Bodoni",22,"bold"))
         self.Title1.grid(row=0, column=0, columnspan=3, padx=5, pady=5)
 
-        self.SubTitle1 = ctk.CTkLabel(self.frame, text="Welcome customer! Please select your action!")
+        self.SubTitle1 = ctk.CTkLabel(self.frame, text="Welcome customer! Please select your action!", font=("Helvetica",13,"italic"))
         self.SubTitle1.grid(row=1, column=0, columnspan=2)
 
-        self.Create_Acc_Menu = ctk.CTkButton(self.frame, text="Register", font=("Bodoni",12,"bold"), command=self.run_open1)
+        self.Create_Acc_Menu = ctk.CTkButton(self.frame, text="Register", font=("Bodoni",14,"bold"), fg_color="dark cyan",command=self.run_open1)
         self.Create_Acc_Menu.grid(row=2, column=0, padx=5, pady=10)
 
-        self.Login_Menu =ctk.CTkButton(self.frame, text="Login", font=("Bodoni",12,"bold"), command=self.run_open2)
+        self.Login_Menu =ctk.CTkButton(self.frame, text="Login", font=("Bodoni",14,"bold"), fg_color="dark cyan",command=self.run_open2)
         self.Login_Menu.grid(row=2, column=1, padx=5, pady=10)
 
-        self.exit_button = ctk.CTkButton(self.root, text="Exit", height=20, width=50, command=self.exit).pack()
+        self.exit_button = ctk.CTkButton(self.root, text="Exit", height=20, width=50, command=self.exit, text_color="black", fg_color="light blue").pack()
 
         self.root.mainloop()
 
