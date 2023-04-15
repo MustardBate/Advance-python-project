@@ -1,7 +1,7 @@
 if __name__ == "__main__":
     import sys
     print("\nTHIS FILE IS NOT INTENDED TO BE RUN DIRECTLY.\n")
-   sys.exit(1)
+    sys.exit(1)
 
 import customtkinter as ctk
 #from tkinter import *
@@ -44,15 +44,15 @@ class BateAdmin:
         self.frame1_welcome2.pack()
     
         # Creating buttons to change screen
-        self.change_to_users_info = ctk.CTkButton(self.frame1, text="Users Information",  font=("Bodoni",15,"bold"), state=DISABLED, width=280, height=40, command=self.select_users_info)
-        self.change_to_users_info.pack(padx=10, pady=50)
-        self.change_to_change_info = ctk.CTkButton(self.frame1, text="Change Users Info", font=("Bodoni",15,"bold"), width=280, height=40, command=self.select_change_info)
-        self.change_to_change_info.pack(padx=10, pady=50)
-        self.change_to_change_plan = ctk.CTkButton(self.frame1, text="Add/Remove Products", font=("Bodoni",15,"bold"), width=280, height=40, command=self.select_change_products)
-        self.change_to_change_plan.pack(padx=10, pady=50)
+        self.change_to_users_info = ctk.CTkButton(self.frame1, text="Users Information",  font=("Bodoni",15,"bold"), state=DISABLED, width=300, height=60, fg_color="light blue", text_color="black", command=self.select_users_info)
+        self.change_to_users_info.pack(padx=10, pady=30)
+        self.change_to_change_info = ctk.CTkButton(self.frame1, text="Change Users Info", font=("Bodoni",15,"bold"), width=300, height=60, fg_color="light blue", text_color="black", command=self.select_change_info)
+        self.change_to_change_info.pack(padx=10, pady=30)
+        self.change_to_change_plan = ctk.CTkButton(self.frame1, text="Add/Remove Products", font=("Bodoni",14,"bold"), width=300, height=60, fg_color="light blue", text_color="black", command=self.select_change_products)
+        self.change_to_change_plan.pack(padx=10, pady=30)
 
         # Creating a "Return" button
-        self.return_button = ctk.CTkButton(self.frame1, text="Return", width=80, command=self.screen.quit)
+        self.return_button = ctk.CTkButton(self.frame1, text="Return", width=60,  fg_color="light blue", text_color="black",command=self.screen.quit)
         self.return_button.pack(side=BOTTOM, pady=10)
 
 
@@ -108,16 +108,16 @@ class BateAdmin:
         self.info_frame.pack(side=LEFT, fill="y")
         self.info_frame.pack_propagate(FALSE)
         self.info_frame_title = ctk.CTkLabel(self.info_frame, text="---Users' Information---", font=("Bodoni",32,"bold"), text_color="black").pack(pady=10)
-        self.search_user_label = ctk.CTkLabel(self.info_frame, text="Search User:", font=("Bodoni",15,"bold"), text_color="black").place(x=250, y=50)
-        self.search_user = ctk.CTkEntry(self.info_frame, width=300, font=("Bodoni",15,"bold") , text_color="white").place(x=380, y=50)
+        self.search_user_label = ctk.CTkLabel(self.info_frame, text="Search User:", font=("Helvetica",18,"bold"), text_color="black").place(x=230, y=50)
+        self.search_user = ctk.CTkEntry(self.info_frame, width=200, font=("Helvetica",18,"bold") , text_color="white").place(x=360, y=50)
 
     def create_change_users_info_frame(self):
         self.change_info_frame = ctk.CTkFrame(self.main_frame, width=795, fg_color="light blue")
         self.change_info_frame.pack(side=LEFT, fill='y')
         self.change_info_frame.pack_propagate(FALSE)
         self.change_info_frame_title = ctk.CTkLabel(self.change_info_frame, text="---Change Users' Information---", font=("Bodoni",32,"bold"), text_color="black").pack(pady=10)
-        self.search_user_label = ctk.CTkLabel(self.change_info_frame, text="Search User:", font=("Bodoni",15,"bold"), text_color="black").place(x=250, y=50)
-        self.search_user = ctk.CTkEntry(self.change_info_frame, width=300, font=("Bodoni",15,"bold") , text_color="white").place(x=380, y=50)
+        self.search_user_label = ctk.CTkLabel(self.change_info_frame, text="Search User:", font=("Helvetica",18,"bold"), text_color="black").place(x=230, y=50)
+        self.search_user = ctk.CTkEntry(self.change_info_frame, width=200, font=("Helvetica",18,"bold") , text_color="white").place(x=360, y=50)
 
     def create_change_products_frame(self):
         self.products_frame = ctk.CTkFrame(self.main_frame, width=795, fg_color="light blue")
@@ -128,6 +128,3 @@ class BateAdmin:
     
     def run(self):
         self.screen.mainloop()
-
-a=BateAdmin()
-a.run()
