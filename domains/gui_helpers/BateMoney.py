@@ -14,15 +14,15 @@ from datetime import datetime
 
 system = System()
 class BateMoney:
-    def __init__(self):#, system: System, web: Web):
+    def __init__(self, system: System, web: Web):
         self.root = ctk.CTk()
         self.root.title("B.A.T.E Internet")
         self.root.geometry("820x500")
         self.root.resizable(FALSE, FALSE)
         self.root._apply_appearance_mode("system")
 
-        #self.system = system
-        #self.web = web
+        self.system = system
+        self.web = web
 
         global balance
         self.main_frame()
